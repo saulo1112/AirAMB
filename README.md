@@ -2,7 +2,7 @@
 
 Final project for the *Aprendizaje Automático* (Machine Learning) course, Specialization in Artificial Intelligence, Universidad Autónoma de Occidente (UAO) — 2025-2S.
 
-The project predicts **hourly PM2.5 (fine particulate matter) concentration one hour ahead (t+1)** for the *Santa Cruz – Girón Norte* air-quality monitoring station in Bucaramanga, Colombia, using historical pollution and meteorological data. It covers the full pipeline — from data extraction and exploratory analysis to model training and a desktop application (**AirAMB**) that serves live predictions.
+The project predicts **hourly PM2.5 (fine particulate matter) concentration one hour ahead (t+1)** for the *Santa Cruz – Girón Norte* air-quality monitoring station in Bucaramanga, Colombia, using historical pollution and meteorological data. It covers the full pipeline, from data extraction and exploratory analysis to model training and a desktop application (**AirAMB**) that serves live predictions.
 
 ## Authors
 
