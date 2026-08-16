@@ -1,0 +1,395 @@
+/* ===== Basic reset ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: linear-gradient(
+    135deg,
+    #f8fafc 0%,
+    rgba(239, 246, 255, 0.3) 50%,
+    #f1f5f9 100%
+  );
+  color: #0f172a;
+}
+
+/* ===== General layout ===== */
+
+.app-shell {
+  width: 1150px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px 0 24px;
+  position: relative;
+}
+
+.page-content {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start; /* aligns panels to the top, like in Figma */
+}
+
+/* ===== Header ===== */
+
+.app-header {
+  height: 96px;
+  padding: 24px;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 12px 25px rgba(15, 23, 42, 0.25); /* strong shadow, Figma style */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === Header icon (SVG) === */
+.header-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.header-text h1 {
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 24px;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.header-text p {
+  margin-top: 2px;
+  font-size: 14px;
+  color: #dbeafe;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.ml-pill {
+  font-size: 14px;
+  color: #dbeafe;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== Panels ===== */
+
+.panel {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 0.8px solid #e2e8f0;
+  box-shadow: 0 1px 2px -1px rgba(15, 23, 42, 0.2);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* input panel: no fixed height so it doesn't overlap the footer */
+.panel-input {
+  padding-bottom: 24px;
+}
+
+/* output panel: grows to resemble the Figma design */
+.panel-output {
+  min-height: 620px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Panel title icons (SVG) */
+.panel-title-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.panel-header-text h2 {
+  font-size: 16px;
+  color: #0a0a0a;
+  line-height: 16px;
+}
+
+.panel-header-text p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #717182;
+}
+
+/* ===== Input panel body ===== */
+
+.panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* more spacing between title and fields */
+}
+
+.field-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Group icons (Concentrations / Variables) */
+.group-icon {
+  width: 20px;   /* slightly larger, like in Figma */
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.85;
+  margin-top: -1px; /* centers them better vertically */
+}
+
+.field-group-header h3 {
+  font-size: 16px;
+  color: #334155;
+}
+
+.field-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* vertical spacing between fields */
+}
+
+.field label {
+  font-size: 14px;
+  color: #334155;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.unit {
+  margin-left: 4px;
+  color: #90a1b9;
+}
+
+.hint {
+  margin-left: 4px;
+  color: #90a1b9;
+  font-weight: 400;
+}
+
+.field input {
+  width: 100%;
+  height: 40px;             /* height closer to the design */
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 0.8px solid #e2e8f0;
+  outline: none;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+}
+
+.field input::placeholder {
+  /* more translucent gray tone, Figma placeholder style */
+  color: rgba(113, 113, 130, 0.45);
+}
+
+/* ===== Primary button ===== */
+
+.primary-btn {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-btn:hover {
+  filter: brightness(1.05);
+}
+
+/* ===== Output panel ===== */
+
+.prediction-placeholder {
+  height: 230px;
+  padding: 32px;
+  border-radius: 14px;
+  border: 0.8px solid #dbeafe;
+  background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Circular placeholder icon using SVG */
+.placeholder-icon {
+  width: 64px;
+  height: 64px;
+  padding: 16px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  object-fit: contain;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); /* no extra shadow */
+}
+
+.prediction-placeholder p {
+  font-size: 16px;
+  color: #90a1b9;
+  text-align: center;
+}
+
+/* --- Small text inside the box --- */
+#prediction-message {
+  font-size: 1rem;
+  color: #64748b;  /* elegant gray */
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* --- Prediction value, large and prominent --- */
+.prediction-value {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #1d4ed8;        /* blue similar to the header */
+  text-align: center;
+  display: none;         /* shown once there is a prediction */
+}
+
+/* Model card */
+
+.model-card {
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: 10px;
+  border: 0.8px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Export report card inside the output panel */
+.export-card {
+  margin-top: 12px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Card header: icon + text */
+.export-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* "Export PDF" button */
+.secondary-btn.export-btn {
+  align-self: stretch;                /* fills the card's full width */
+  height: 36px;
+  border-radius: 8px;
+  border: 0.8px solid #bfdbfe;
+  background: #f8fafc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+/* Export PDF button icon (Sheet.svg) */
+.btn-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Soft hover, Figma style */
+.secondary-btn.export-btn:hover {
+  background: #eff6ff;
+}
+
+/* Info icon (SVG) */
+.model-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.model-text p {
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.model-text .muted {
+  margin-top: 2px;
+  color: #475569;
+}
+
+.label {
+  font-weight: 600;
+}
+
+/* ===== Footer ===== */
+
+.page-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 16px;
+  color: #62748e;
+}
+
+.page-footer .muted {
+  color: #90a1b9;
+}

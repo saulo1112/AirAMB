@@ -1,0 +1,32 @@
+# ===== Build artifacts (PyInstaller / Inno Setup) =====
+build/
+dist/
+Ejecutable/
+*.spec
+
+# ===== Trained model (too large for Git — 100MB+ GitHub limit) =====
+# Distribute via Git LFS, GitHub Releases, or an external download link instead.
+Modelo/*.pkl
+
+# ===== Generated PDF reports (user-specific runtime output) =====
+GUI/Reportes/*.pdf
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.Python
+env/
+venv/
+.venv/
+
+# ===== Jupyter =====
+.ipynb_checkpoints/
+
+# ===== Editor / OS =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

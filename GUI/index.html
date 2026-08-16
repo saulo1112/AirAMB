@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PM2.5 Prediction (t+1)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+
+        <div class="logo-box">
+          <img class="header-icon" src="Assets/White Wind.svg" alt="menu" />
+        </div>
+
+        <div class="header-text">
+          <h1>PM<sub>2.5</sub> Prediction (t+1)</h1>
+          <p>Air quality forecasting system</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <span class="ml-pill">ML-Powered ⚡</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+
+      <!-- LEFT COLUMN -->
+      <section class="panel panel-input">
+        <header class="panel-header">
+          <img class="panel-title-icon" src="Assets/Signal.svg" alt="icon" />
+          <div class="panel-header-text">
+            <h2>Input Parameters</h2>
+            <p>Enter concentration values and temporal variables</p>
+          </div>
+        </header>
+
+        <div class="panel-body">
+
+          <!-- PM2.5 -->
+          <section class="field-group">
+            <header class="field-group-header">
+              <img class="group-icon" src="Assets/Blue Wind.svg" alt="pm25 icon">
+              <h3>PM<sub>2.5</sub> Concentrations</h3>
+            </header>
+
+            <div class="field-grid">
+              <div class="field">
+                <label>PM<sub>2.5</sub> <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_pm2_5" />
+              </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label>PM<sub>2.5</sub> (t-1) <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="pm25_lag1"/>
+              </div>
+
+              <div class="field">
+                <label>PM<sub>2.5</sub> (t-2) <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="pm25_lag2"/>
+              </div>
+
+              <div class="field">
+                <label>PM<sub>2.5</sub> (t-3) <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="pm25_lag3"/>
+              </div>
+            </div>
+          </section>
+
+          <!-- PM10 -->
+          <section class="field-group">
+            <header class="field-group-header">
+              <img class="group-icon" src="Assets/Blue Wind.svg" alt="pm10 icon">
+              <h3>PM<sub>10</sub> Concentrations</h3>
+            </header>
+
+            <div class="field-grid">
+              <div class="field">
+                <label>PM₁₀ <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_pm10"/>
+              </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label>PM₁₀ (t-1) <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="pm10_lag1"/>
+              </div>
+
+              <div class="field">
+                <label>PM₁₀ (t-2) <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="pm10_lag2"/>
+              </div>
+
+              <div class="field">
+                <label>PM₁₀ (t-3) <span class="unit">µg/m³</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="pm10_lag3"/>
+              </div>
+            </div>
+          </section>
+
+          <!-- TEMPORAL VARIABLES -->
+          <section class="field-group">
+            <header class="field-group-header">
+              <img class="group-icon" src="Assets/Clock.svg" alt="clock icon">
+              <h3>Temporal Variables</h3>
+            </header>
+
+            <div class="field-grid">
+              <div class="field">
+                <label>Hour of day <span class="hint">(0-23)</span></label>
+                <input type="number" min="0" max="23" placeholder="0" data-feature="hour"/>
+              </div>
+
+              <div class="field">
+                <label>Day of week <span class="hint">(0-6) (Monday = 0, Sunday = 6)</span></label>
+                <input type="number" min="0" max="6" placeholder="0" data-feature="dayofweek"/>
+              </div>
+
+              <div class="field">
+                <label>Month <span class="hint">(1-12)</span></label>
+                <input type="number" min="1" max="12" placeholder="1" data-feature="month"/>
+              </div>
+            </div>
+          </section>
+
+          <!-- METEOROLOGICAL VARIABLES -->
+          <section class="field-group">
+            <header class="field-group-header">
+              <img class="group-icon" src="Assets/Clouds.svg" alt="weather icon">
+              <h3>Meteorological Variables</h3>
+            </header>
+
+            <div class="field-grid">
+              <div class="field">
+                <label>Precipitation <span class="unit">mm</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_lluvia"/>
+              </div>
+
+              <div class="field">
+                <label>Solar radiation <span class="unit">W/m²</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_rad"/>
+              </div>
+
+              <div class="field">
+                <label>Wind speed <span class="unit">m/s</span></label>
+                <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_vel"/>
+              </div>
+
+              <div class="field">
+                <label>Wind direction <span class="unit">degrees (°)</span></label>
+                <input type="number" step="1" placeholder="0" data-feature="est_santa_cruz_gir_n_dir"/>
+              </div>
+
+              <div class="field">
+                <label>Relative humidity <span class="unit">%</span></label>
+                <input type="number" step="1" placeholder="0" data-feature="est_santa_cruz_gir_n_humedad"/>
+              </div>
+
+              <div class="field">
+                <label>Ambient temperature <span class="unit">°C</span></label>
+                <input type="number" step="1" placeholder="0" data-feature="est_santa_cruz_gir_n"/>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <button class="primary-btn"
+            id="btn-predict"
+            type="button">
+          Predict PM <sub>2.5</sub>&nbsp;(t+1)
+        </button>
+      </section>
+
+      <!-- RIGHT PANEL -->
+      <section class="panel panel-output">
+        <header class="panel-header">
+          <img class="panel-title-icon" src="Assets/Trend.svg" alt="trend icon" />
+          <div class="panel-header-text">
+            <h2>Prediction Result</h2>
+            <p>Estimated concentration for the next hour</p>
+          </div>
+        </header>
+
+        <div class="panel-body">
+
+          <div class="prediction-placeholder" id="prediction-panl">
+            <img class="placeholder-icon" src="Assets/Trend - gray.svg" alt="placeholder icon">
+
+            <!--Top message inside the box-->
+            <p id>Fill out the form and click "Predict"</p>
+
+            <!--Prediction value, hidden at first-->
+            <p id="prediction-result" class="prediction-value" style="display: none;">—</p>
+            <p id="prediction-error" class="prediction-error"></p>
+          </div>
+
+          <div class="model-card">
+            <img class="model-icon" src="Assets/Information.svg" alt="info icon">
+            <div class="model-text">
+              <p><span class="label">Model:</span> Random Forest</p>
+              <p class="muted">Version 1.0 • Last updated: Nov 2025</p>
+            </div>
+          </div>
+
+          <!-- EXPORT REPORT -->
+          <div class="model-card export-card">
+            <div class="export-header">
+              <img class="model-icon" src="Assets/Report.svg" alt="report icon">
+              <div class="model-text">
+                <p><span class="label">Export report</span></p>
+                <p class="muted">
+                  Generate a PDF report with the entered data and the prediction result.
+                </p>
+              </div>
+            </div>
+
+            <button class="secondary-btn export-btn"
+                    id="btn-export-pdf"
+                    type="button">
+              <img class="btn-icon" src="Assets/Sheet.svg" alt="pdf icon">
+              <span>Export PDF</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="page-footer">
+      <p>System developed with Machine Learning algorithms for environmental analysis</p>
+      <p class="muted">PM <sub>2.5</sub> values are measured in micrograms per cubic meter (µg/m³)</p>
+    </footer>
+
+  </div>
+
+
+  <!-- ============================================= -->
+  <!-- SCRIPT SECTION -->
+  <!-- ============================================= -->
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+  window._pywebviewReady = false;
+
+  window.addEventListener('pywebviewready', function () {
+    console.log('[JS] pywebviewready fired');
+    window._pywebviewReady = true;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('[JS] DOMContentLoaded fired');
+
+    const predictBtn = document.getElementById('btn-predict');
+    const pdfBtn = document.getElementById('btn-export-pdf');
+
+    if (predictBtn) {
+      predictBtn.addEventListener('click', function () {
+        console.log('[JS] Predict button clicked');
+        predict();
+      });
+    }
+
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', function () {
+        console.log('[JS] Export PDF button clicked');
+        generatePDF();
+      });
+    }
+  });
+
+  function collectFormData() {
+    const inputs = document.querySelectorAll('[data-feature]');
+    const payload = {};
+
+    inputs.forEach((input) => {
+      const featureName = input.dataset.feature;
+      const rawValue = input.value.trim();
+      payload[featureName] = rawValue === '' ? null : Number(rawValue);
+    });
+
+    console.log('[JS] Payload for backend:', payload);
+    return payload;
+  }
+
+  async function predict() {
+    const resultElem = document.getElementById('prediction-result');
+    const errorElem = document.getElementById('prediction-error');
+    const msgElem = document.getElementById('prediction-message');
+
+    // Clear previous error
+    if (errorElem) {
+      errorElem.textContent = '';
+    }
+
+    if (!window.pywebview || !window.pywebview.api || !window.pywebview.api.predict) {
+      alert('pywebview is not ready yet. Try again in a few seconds.');
+      return;
+    }
+
+    try {
+      const data = collectFormData();
+
+      // "Calculating" state
+      if (msgElem) {
+        msgElem.textContent = 'Calculating prediction...';
+        msgElem.style.display = 'block';
+      }
+      if (resultElem) {
+        resultElem.style.display = 'none';
+      }
+
+      console.log('[JS] Calling pywebview.api.predict...');
+      const predictionValue = await window.pywebview.api.predict(data);
+      console.log('[JS] Response:', predictionValue);
+
+      // Show only the large number in the box
+      if (msgElem) {
+        msgElem.textContent = '';
+        msgElem.style.display = 'none';
+      }
+      if (resultElem) {
+        const formatted = Number(predictionValue).toFixed(2) + ' µg/m³';
+        resultElem.textContent = formatted;
+        resultElem.style.display = 'block';
+      }
+
+    } catch (err) {
+      console.error('[JS] Error during prediction:', err);
+
+      if (resultElem) {
+        resultElem.textContent = '—';
+        resultElem.style.display = 'none';
+      }
+      if (msgElem) {
+        msgElem.textContent = 'An error occurred during prediction.';
+        msgElem.style.display = 'block';
+      }
+      if (errorElem) {
+        errorElem.textContent = 'Error calculating the prediction. Please check again.';
+      }
+    }
+  }
+
+  async function generatePDF() {
+    console.log('[PDF] generatePDF() called');
+
+    if (!window.pywebview || !window.pywebview.api || !window.pywebview.api.export_pdf) {
+      alert('The export_pdf function is not available in the backend.');
+      return;
+    }
+
+    try {
+      // 1) Collect inputs with readable labels
+      const inputs = document.querySelectorAll('[data-feature]');
+      const items = [];
+
+      inputs.forEach((input) => {
+        let labelText = '';
+        const field = input.closest('.field');
+        if (field) {
+          const label = field.querySelector('label');
+          if (label) {
+            labelText = label.innerText.trim();
+          }
+        }
+        if (!labelText) {
+          labelText = input.dataset.feature || 'Variable';
+        }
+
+        const valueText = input.value !== '' ? input.value : '—';
+
+        items.push({
+          feature: input.dataset.feature || null,
+          label: labelText,
+          value: valueText,
+        });
+      });
+
+      // 2) Prediction currently on screen (if any)
+      const resultElem = document.getElementById('prediction-result');
+      const predictionText =
+        resultElem && resultElem.style.display !== 'none'
+          ? (resultElem.textContent || '—')
+          : '—';
+
+      const payload = {
+        inputs: items,
+        prediction: predictionText,
+      };
+
+      console.log('[PDF] Payload to send to export_pdf:', payload);
+
+      // 3) Call Python
+      const savedPath = await window.pywebview.api.export_pdf(payload);
+      console.log('[PDF] PDF saved at:', savedPath);
+
+      alert('Report generated successfully.\nFile path:\n' + savedPath);
+    } catch (error) {
+      console.error('[PDF] Error generating the PDF:', error);
+      alert('An error occurred while generating the PDF. Check the console for details.');
+    }
+  }
+
+  </script>
+
+</body>
+</html>

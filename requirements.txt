@@ -1,0 +1,12 @@
+# Notebook (data extraction, EDA, modeling)
+sodapy
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+joblib
+
+# Desktop app (AirAMB)
+pywebview
+reportlab
