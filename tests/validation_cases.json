@@ -1,0 +1,40 @@
+{
+  "valid_inputs": {
+    "est_santa_cruz_gir_n_pm10": 31.0,
+    "est_santa_cruz_gir_n_pm2_5": 18.4,
+    "est_santa_cruz_gir_n": 26,
+    "est_santa_cruz_gir_n_lluvia": 0,
+    "est_santa_cruz_gir_n_humedad": 72,
+    "est_santa_cruz_gir_n_dir": 135,
+    "est_santa_cruz_gir_n_vel": 1.8,
+    "est_santa_cruz_gir_n_rad": 320,
+    "pm25_lag1": 17.9,
+    "pm10_lag1": 29.5,
+    "pm25_lag2": 16.5,
+    "pm10_lag2": 27.8,
+    "pm25_lag3": 15.2,
+    "pm10_lag3": 26.1,
+    "hour": 8,
+    "dayofweek": 2,
+    "month": 5
+  },
+  "cases": [
+    { "name": "valid inputs", "override": {}, "ok": true },
+    { "name": "numeric strings are accepted", "override": { "hour": "8", "pm25_lag1": "17.9" }, "ok": true },
+    { "name": "boundary values are accepted", "override": { "hour": 23, "dayofweek": 6, "month": 12, "est_santa_cruz_gir_n_dir": 360, "est_santa_cruz_gir_n_humedad": 100 }, "ok": true },
+    { "name": "missing field", "remove": ["pm25_lag2"], "ok": false, "i18nKey": "val.missing" },
+    { "name": "empty value", "override": { "pm25_lag1": null }, "ok": false, "i18nKey": "val.number" },
+    { "name": "non-numeric text", "override": { "est_santa_cruz_gir_n_vel": "abc" }, "ok": false, "i18nKey": "val.number" },
+    { "name": "negative concentration", "override": { "est_santa_cruz_gir_n_pm2_5": -1 }, "ok": false, "i18nKey": "val.negative" },
+    { "name": "negative precipitation", "override": { "est_santa_cruz_gir_n_lluvia": -0.1 }, "ok": false, "i18nKey": "val.negative" },
+    { "name": "PM2.5 above 1000", "override": { "est_santa_cruz_gir_n_pm2_5": 1001 }, "ok": false, "i18nKey": "val.high" },
+    { "name": "PM10 lag above 1000", "override": { "pm10_lag3": 1500 }, "ok": false, "i18nKey": "val.high" },
+    { "name": "wind direction above 360", "override": { "est_santa_cruz_gir_n_dir": 361 }, "ok": false, "i18nKey": "val.dir" },
+    { "name": "hour 24", "override": { "hour": 24 }, "ok": false, "i18nKey": "val.hour" },
+    { "name": "negative hour", "override": { "hour": -1 }, "ok": false, "i18nKey": "val.hour" },
+    { "name": "day of week 7", "override": { "dayofweek": 7 }, "ok": false, "i18nKey": "val.dayofweek" },
+    { "name": "month 0", "override": { "month": 0 }, "ok": false, "i18nKey": "val.month" },
+    { "name": "month 13", "override": { "month": 13 }, "ok": false, "i18nKey": "val.month" },
+    { "name": "humidity above 100", "override": { "est_santa_cruz_gir_n_humedad": 101 }, "ok": false, "i18nKey": "val.humidity" }
+  ]
+}

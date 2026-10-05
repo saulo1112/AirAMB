@@ -1,0 +1,31 @@
+# Runs the unit tests on every push and pull request.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    name: Python (validation, features)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # The tests only need numpy/pandas; the full pinned set in requirements.txt
+      # is for the notebook and the desktop app.
+      - run: pip install numpy pandas pytest
+      - run: python -m pytest -q
+
+  javascript:
+    name: JavaScript (i18n, validation)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test tests/*.test.js
