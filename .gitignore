@@ -30,3 +30,8 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
+
+# ===== Logs and test caches =====
+*.log
+.pytest_cache/
+node_modules/
