@@ -1,8 +1,8 @@
-# AirAMB — Hourly PM2.5 Forecasting in Bucaramanga, Colombia
+# AirAMB: hourly PM2.5 forecasting in Bucaramanga, Colombia
 
-Final project for the *Aprendizaje Automático* (Machine Learning) course, Specialization in Artificial Intelligence, Universidad Autónoma de Occidente (UAO) — 2025-2S.
+This repository contains the final project for the course Aprendizaje Automático (Machine Learning), Specialization in Artificial Intelligence, Universidad Autónoma de Occidente (UAO), 2025-2S.
 
-The project predicts **hourly PM2.5 (fine particulate matter) concentration one hour ahead (t+1)** for the *Santa Cruz – Girón Norte* air-quality monitoring station in Bucaramanga, Colombia, using historical pollution and meteorological data. It covers the full pipeline, from data extraction and exploratory analysis to model training and a desktop application (**AirAMB**) that serves live predictions.
+The project addresses the prediction of hourly PM2.5 (fine particulate matter) concentration one hour ahead (t+1) for the Santa Cruz - Girón Norte air-quality monitoring station in Bucaramanga, Colombia, using historical pollution and meteorological data. The work covers the full pipeline: data extraction, exploratory analysis, model training, and a desktop application, AirAMB, that serves predictions from the trained model.
 
 ## Authors
 
@@ -12,19 +12,15 @@ The project predicts **hourly PM2.5 (fine particulate matter) concentration one 
 - Luis David Hurtado Caicedo
 - Manuel Castillo Rosales
 
-**Instructor:** Juan Camilo Giraldo Londoño
+Instructor: Juan Camilo Giraldo Londoño
 
 ## Project overview
 
-1. **Data extraction** — hourly air-quality records pulled from Colombia's Open Data portal (Datos Abiertos Colombia) via the Socrata API.
-2. **Exploratory Data Analysis (EDA)** — null-value handling, variable-name normalization across stations, seasonal/diurnal pattern analysis, correlation study between PM2.5 and meteorological variables (wind speed, humidity, solar radiation).
-3. **Feature engineering** — temporal lags (t-1, t-2, t-3) for PM2.5/PM10, cyclic encodings for hour and day of week, chronological train/test split to avoid data leakage.
-4. **Modeling** — three supervised regressors compared with a time-aware validation scheme:
-   - **Random Forest Regressor** (best performer, selected for deployment)
-   - AdaBoost
-   - Ridge Regression (L2)
-5. **Evaluation** — RMSE, MAE, R² on train/test, plus a computational-complexity comparison (training vs. prediction time).
-6. **Deployment** — the winning model is exported to `Modelo/best_rf_pm25.pkl` and served by a desktop GUI (**AirAMB**) built with [pywebview](https://pywebview.flowrl.com/), packaged into a Windows installer.
+Hourly air-quality records were obtained from Colombia's open data portal (Datos Abiertos Colombia) through the Socrata API. The exploratory analysis addressed null-value treatment, normalization of variable names across monitoring stations, and examination of seasonal and diurnal patterns, together with the correlation between PM2.5 and meteorological variables such as wind speed, humidity, and solar radiation.
+
+Feature engineering introduced temporal lags (t-1, t-2, t-3) for PM2.5 and PM10, cyclic encodings for hour and day of week, and a chronological train/test split to prevent data leakage. Three supervised regressors were then compared under a time-aware validation scheme: Random Forest Regressor, AdaBoost, and Ridge Regression with L2 regularization. Evaluation relied on RMSE, MAE, and R² on both the training and test sets, complemented by a comparison of computational complexity between training time and prediction time.
+
+Random Forest obtained the best test-set R² and RMSE among the three models and was selected for deployment, despite a higher training cost than the alternatives. The resulting model was exported to `Modelo/best_rf_pm25.pkl` and is served by AirAMB, a desktop application built with pywebview and packaged as a Windows installer.
 
 ## Repository structure
 
@@ -32,17 +28,20 @@ The project predicts **hourly PM2.5 (fine particulate matter) concentration one 
 .
 ├── Notebook/            Main Jupyter notebook: data extraction, EDA, feature
 │                        engineering, model training and evaluation
-├── Modelo/              Trained model bundle (best_rf_pm25.pkl) — not tracked
-│                        in Git, see "Getting the trained model" below
+├── Modelo/              Trained model bundle (best_rf_pm25.pkl), not tracked
+│                        in Git; see "Obtaining the trained model" below
 ├── Scripts/             Inference pipeline used by the GUI
-│   ├── config.py            App name + resource-path resolution (dev / PyInstaller)
+│   ├── config.py            App name and resource-path resolution (dev / PyInstaller)
 │   ├── features_pm25.py     Builds the model's feature vector from raw inputs
 │   ├── validation_pm25.py   Input validation and type casting
 │   ├── predict_pm25.py      Loads the model and runs inference
+│   ├── export_web_model.py  Exports the trained forest to GUI/model/ for the web version
 │   └── main_pm25.py         Application entry point
 ├── GUI/                 Desktop application (AirAMB)
-│   ├── app.py                pywebview backend: prediction API + PDF report export
-│   ├── index.html            Frontend UI
+│   ├── app.py                pywebview backend: prediction API and PDF report export
+│   ├── index.html            Frontend UI (desktop app and web version)
+│   ├── web_predict.js        Browser backend: validation, Random Forest inference and PDF export in JS
+│   ├── model/                Random Forest exported for the web (generated by Scripts/export_web_model.py)
 │   ├── style.css              Styling
 │   ├── Assets/                Icons used by the UI
 │   └── Reportes/               Generated PDF reports (gitignored)
@@ -55,34 +54,55 @@ The project predicts **hourly PM2.5 (fine particulate matter) concentration one 
 
 ## The model
 
-- **Algorithm:** Random Forest Regressor (scikit-learn)
-- **Target:** PM2.5 concentration one hour ahead, `PM2.5(t+1)`
-- **Station:** Santa Cruz – Girón Norte (chosen for having the best data coverage)
-- **Inputs (17 features):** current PM2.5/PM10, three lags each of PM2.5 and PM10, hour, day of week, month, precipitation, solar radiation, wind speed and direction, relative humidity, ambient temperature.
+The deployed model is a Random Forest Regressor, trained with scikit-learn, that predicts the PM2.5 concentration one hour ahead, `PM2.5(t+1)`, for the Santa Cruz - Girón Norte station, chosen for its data coverage relative to the other stations in the dataset. Its seventeen input features comprise the current PM2.5 and PM10 readings, three lags of each, the hour, day of week, and month, and the meteorological variables precipitation, solar radiation, wind speed, wind direction, relative humidity, and ambient temperature.
 
-Random Forest was chosen over AdaBoost and Ridge Regression for its superior test-set R² and RMSE, at the cost of a heavier (but still fast-enough) inference step.
+## Obtaining the trained model
 
-## Getting the trained model
+The file `Modelo/best_rf_pm25.pkl` (approximately 170 MB) exceeds GitHub's per-file size limit and is excluded through `.gitignore`. Running the GUI locally therefore requires either regenerating the model by re-running the notebook, or obtaining the file separately, for example from a GitHub Release asset or through Git LFS if configured, and placing it at `Modelo/best_rf_pm25.pkl`.
 
-`Modelo/best_rf_pm25.pkl` (~170 MB) exceeds GitHub's per-file size limit and is excluded via `.gitignore`. To run the GUI locally you need to either:
+## Web version (GitHub Pages)
 
-- Re-run the `Notebook/` to regenerate it, or
-- Obtain the file separately (e.g. a GitHub Release asset or Git LFS, if configured) and place it at `Modelo/best_rf_pm25.pkl`.
+The same interface runs in a normal browser without Python: `GUI/web_predict.js` ports the input validation, the feature engineering, the PDF report (jsPDF) and the Random Forest inference to JavaScript. When `window.pywebview` is present (desktop app) `index.html` keeps calling the Python backend; otherwise it uses the browser backend.
 
-## Running the desktop app (AirAMB)
+The 170 MB pickle is converted by `Scripts/export_web_model.py` into `GUI/model/pm25_rf.bin.gz` (about 7 MB, all 200 trees, no pruning or retraining). Predictions match scikit-learn to within 1e-5 µg/m³. Regenerate it whenever `Modelo/best_rf_pm25.pkl` changes:
 
 ```bash
-pip install -r requirements.txt   # pywebview, scikit-learn, joblib, pandas, numpy, reportlab
+python Scripts/export_web_model.py
+```
+
+To try it locally (opening `index.html` with a double click does not work, because the browser blocks `fetch` on `file://`):
+
+```bash
+python -m http.server 8000 --directory GUI
+```
+
+then open <http://localhost:8000>. The workflow `.github/workflows/pages.yml` publishes `GUI/` to GitHub Pages on every push to `main` that touches it. Enable it once under Settings -> Pages -> Source: **GitHub Actions**. The site is served at `https://saulo1112.github.io/AirAMB/`.
+
+## Running the desktop app
+
+The dependency versions in `requirements.txt` are pinned to match `Modelo/best_rf_pm25.pkl`, which was pickled with scikit-learn 1.6.1 under numpy 2.x. joblib/pickle deserialization of a scikit-learn model is only reliable when the loading environment uses a compatible scikit-learn version and numpy ABI; loading it with an older numpy (below 2.0) fails with `ModuleNotFoundError: No module named 'numpy._core'`, since numpy 2.0 renamed its internal `numpy.core` module to `numpy._core`. A dedicated environment is therefore recommended, separate from any environment already carrying older, pinned scientific-Python stacks:
+
+```bash
+conda create -n airamb python=3.10 -y
+conda activate airamb
+pip install -r requirements.txt
 python Scripts/main_pm25.py
 ```
 
-This opens a native window where you can enter the 17 input variables and get an instant PM2.5(t+1) prediction, with the option to export a PDF report.
+This command opens a native window in which the seventeen input variables can be entered to obtain an immediate PM2.5(t+1) prediction, with an option to export the result as a PDF report.
 
-A pre-built Windows installer is also available under `Inno Setup/` (built via [Inno Setup](https://jrsoftware.org/isinfo.php) from the PyInstaller output in `dist/`).
+A pre-built Windows installer is also available under `Inno Setup/`, built with [Inno Setup](https://jrsoftware.org/isinfo.php) from the PyInstaller output in `dist/`. When building from a conda environment, `Library/bin` (where conda keeps `ffi.dll`, `tcl86t.dll`, `tk86t.dll`, `libexpat.dll`, `liblzma.dll`, and `libbz2.dll`) must be added to `PATH` beforehand, since PyInstaller's dependency scan otherwise misses those DLLs and the packaged executable then fails at startup with `ImportError: DLL load failed while importing _ctypes`. To regenerate both from the `airamb` environment:
+
+```bash
+set PATH=%CONDA_PREFIX%\Library\bin;%PATH%
+pyinstaller --name AirAMB --onefile --icon "Logo/AirAMB_Logo.ico" --add-data "GUI;GUI" --add-data "Modelo;Modelo" Scripts/main_pm25.py
+```
+
+followed by compiling `Inno Setup/App script.iss` with the Inno Setup Compiler (`ISCC.exe`), which reads `dist/AirAMB.exe` and writes `Ejecutable/AirAMB_Setup.exe`.
 
 ## Notebook
 
-The full analysis lives in [`Notebook/Proyecto_(ML)_Grupo_2.ipynb`](Notebook/Proyecto_(ML)_Grupo_2.ipynb): data extraction, EDA, feature engineering, model comparison, and validation of individual predictions against real observations.
+The full analysis is contained in [`Notebook/Proyecto_(ML)_Grupo_2.ipynb`](Notebook/Proyecto_(ML)_Grupo_2.ipynb): data extraction, exploratory analysis, feature engineering, model comparison, and validation of individual predictions against real observations.
 
 ## License
 

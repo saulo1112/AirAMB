@@ -1,12 +1,20 @@
+# Pinned to match the versions used to train and pickle Modelo/best_rf_pm25.pkl.
+# scikit-learn pickles are only reliably loadable with the scikit-learn version
+# (and a compatible numpy ABI) they were saved with; see README "Obtaining the
+# trained model" for details.
+
 # Notebook (data extraction, EDA, modeling)
 sodapy
-pandas
-numpy
+pandas>=2.2
+numpy==2.2.4
 matplotlib
 seaborn
-scikit-learn
+scikit-learn==1.6.1
 joblib
 
 # Desktop app (AirAMB)
 pywebview
 reportlab
+
+# Packaging the desktop app into a Windows executable
+pyinstaller

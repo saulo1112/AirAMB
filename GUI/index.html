@@ -194,7 +194,7 @@
             <img class="placeholder-icon" src="Assets/Trend - gray.svg" alt="placeholder icon">
 
             <!--Top message inside the box-->
-            <p id>Fill out the form and click "Predict"</p>
+            <p id="prediction-message">Fill out the form and click "Predict"</p>
 
             <!--Prediction value, hidden at first-->
             <p id="prediction-result" class="prediction-value" style="display: none;">—</p>
@@ -249,6 +249,9 @@
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+  <!-- Browser backend (model + validation + PDF), used when not running inside pywebview -->
+  <script src="web_predict.js"></script>
+
   <script>
   window._pywebviewReady = false;
 
@@ -302,8 +305,11 @@
       errorElem.textContent = '';
     }
 
-    if (!window.pywebview || !window.pywebview.api || !window.pywebview.api.predict) {
-      alert('pywebview is not ready yet. Try again in a few seconds.');
+    // Desktop app (pywebview) calls Python; a normal browser (GitHub Pages) runs the model in JS.
+    const useDesktop = !!(window.pywebview && window.pywebview.api && window.pywebview.api.predict);
+    const useWeb = !window.pywebview && window.AirAMBWeb && location.protocol !== 'file:';
+    if (!useDesktop && !useWeb) {
+      alert('The application is not ready yet. Try again in a few seconds.');
       return;
     }
 
@@ -319,8 +325,10 @@
         resultElem.style.display = 'none';
       }
 
-      console.log('[JS] Calling pywebview.api.predict...');
-      const predictionValue = await window.pywebview.api.predict(data);
+      console.log('[JS] Predicting via', useDesktop ? 'pywebview' : 'browser model');
+      const predictionValue = useDesktop
+        ? await window.pywebview.api.predict(data)
+        : await window.AirAMBWeb.predict(data);
       console.log('[JS] Response:', predictionValue);
 
       // Show only the large number in the box
@@ -337,6 +345,8 @@
     } catch (err) {
       console.error('[JS] Error during prediction:', err);
 
+      const detail = (err && (err.message || err.toString())) || '';
+
       if (resultElem) {
         resultElem.textContent = '—';
         resultElem.style.display = 'none';
@@ -346,7 +356,9 @@
         msgElem.style.display = 'block';
       }
       if (errorElem) {
-        errorElem.textContent = 'Error calculating the prediction. Please check again.';
+        errorElem.textContent = detail
+          ? `Error calculating the prediction: ${detail}`
+          : 'Error calculating the prediction. Please check again.';
       }
     }
   }
@@ -354,7 +366,9 @@
   async function generatePDF() {
     console.log('[PDF] generatePDF() called');
 
-    if (!window.pywebview || !window.pywebview.api || !window.pywebview.api.export_pdf) {
+    const useDesktop = !!(window.pywebview && window.pywebview.api && window.pywebview.api.export_pdf);
+    const useWeb = !window.pywebview && window.AirAMBWeb && location.protocol !== 'file:';
+    if (!useDesktop && !useWeb) {
       alert('The export_pdf function is not available in the backend.');
       return;
     }
