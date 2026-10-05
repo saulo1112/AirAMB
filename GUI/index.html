@@ -414,11 +414,15 @@
 
       console.log('[PDF] Payload to send to export_pdf:', payload);
 
-      // 3) Call Python
-      const savedPath = await window.pywebview.api.export_pdf(payload);
-      console.log('[PDF] PDF saved at:', savedPath);
-
-      alert('Report generated successfully.\nFile path:\n' + savedPath);
+      // 3) Desktop: Python writes the file; browser: jsPDF downloads it
+      if (useDesktop) {
+        const savedPath = await window.pywebview.api.export_pdf(payload);
+        console.log('[PDF] PDF saved at:', savedPath);
+        alert('Report generated successfully.\nFile path:\n' + savedPath);
+      } else {
+        const fileName = await window.AirAMBWeb.exportPdf(payload);
+        console.log('[PDF] PDF downloaded as:', fileName);
+      }
     } catch (error) {
       console.error('[PDF] Error generating the PDF:', error);
       alert('An error occurred while generating the PDF. Check the console for details.');
