@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>PM2.5 Prediction (t+1)</title>
+  <link rel="icon" href="Assets/AirAMB_Logo.ico" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,13 +18,17 @@
         </div>
 
         <div class="header-text">
-          <h1>PM<sub>2.5</sub> Prediction (t+1)</h1>
-          <p>Air quality forecasting system</p>
+          <h1 data-i18n-html="header.title">PM<sub>2.5</sub> Prediction (t+1)</h1>
+          <p data-i18n="header.subtitle">Air quality forecasting system</p>
         </div>
       </div>
 
       <div class="header-right">
-        <span class="ml-pill">ML-Powered ⚡</span>
+        <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang.label" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        </div>
+        <span class="ml-pill" data-i18n="header.pill">ML-Powered ⚡</span>
       </div>
     </header>
 
@@ -35,8 +40,8 @@
         <header class="panel-header">
           <img class="panel-title-icon" src="Assets/Signal.svg" alt="icon" />
           <div class="panel-header-text">
-            <h2>Input Parameters</h2>
-            <p>Enter concentration values and temporal variables</p>
+            <h2 data-i18n="input.title">Input Parameters</h2>
+            <p data-i18n="input.subtitle">Enter concentration values and temporal variables</p>
           </div>
         </header>
 
@@ -46,7 +51,7 @@
           <section class="field-group">
             <header class="field-group-header">
               <img class="group-icon" src="Assets/Blue Wind.svg" alt="pm25 icon">
-              <h3>PM<sub>2.5</sub> Concentrations</h3>
+              <h3 data-i18n-html="group.pm25">PM<sub>2.5</sub> Concentrations</h3>
             </header>
 
             <div class="field-grid">
@@ -77,7 +82,7 @@
           <section class="field-group">
             <header class="field-group-header">
               <img class="group-icon" src="Assets/Blue Wind.svg" alt="pm10 icon">
-              <h3>PM<sub>10</sub> Concentrations</h3>
+              <h3 data-i18n-html="group.pm10">PM<sub>10</sub> Concentrations</h3>
             </header>
 
             <div class="field-grid">
@@ -108,22 +113,22 @@
           <section class="field-group">
             <header class="field-group-header">
               <img class="group-icon" src="Assets/Clock.svg" alt="clock icon">
-              <h3>Temporal Variables</h3>
+              <h3 data-i18n="group.temporal">Temporal Variables</h3>
             </header>
 
             <div class="field-grid">
               <div class="field">
-                <label>Hour of day <span class="hint">(0-23)</span></label>
+                <label><span data-i18n="field.hour">Hour of day</span> <span class="hint">(0-23)</span></label>
                 <input type="number" min="0" max="23" placeholder="0" data-feature="hour"/>
               </div>
 
               <div class="field">
-                <label>Day of week <span class="hint">(0-6) (Monday = 0, Sunday = 6)</span></label>
+                <label><span data-i18n="field.dayofweek">Day of week</span> <span class="hint" data-i18n="hint.dayofweek">(0-6) (Monday = 0, Sunday = 6)</span></label>
                 <input type="number" min="0" max="6" placeholder="0" data-feature="dayofweek"/>
               </div>
 
               <div class="field">
-                <label>Month <span class="hint">(1-12)</span></label>
+                <label><span data-i18n="field.month">Month</span> <span class="hint">(1-12)</span></label>
                 <input type="number" min="1" max="12" placeholder="1" data-feature="month"/>
               </div>
             </div>
@@ -133,37 +138,37 @@
           <section class="field-group">
             <header class="field-group-header">
               <img class="group-icon" src="Assets/Clouds.svg" alt="weather icon">
-              <h3>Meteorological Variables</h3>
+              <h3 data-i18n="group.meteo">Meteorological Variables</h3>
             </header>
 
             <div class="field-grid">
               <div class="field">
-                <label>Precipitation <span class="unit">mm</span></label>
+                <label><span data-i18n="field.rain">Precipitation</span> <span class="unit">mm</span></label>
                 <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_lluvia"/>
               </div>
 
               <div class="field">
-                <label>Solar radiation <span class="unit">W/m²</span></label>
+                <label><span data-i18n="field.radiation">Solar radiation</span> <span class="unit">W/m²</span></label>
                 <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_rad"/>
               </div>
 
               <div class="field">
-                <label>Wind speed <span class="unit">m/s</span></label>
+                <label><span data-i18n="field.windspeed">Wind speed</span> <span class="unit">m/s</span></label>
                 <input type="number" step="0.1" placeholder="0.0" data-feature="est_santa_cruz_gir_n_vel"/>
               </div>
 
               <div class="field">
-                <label>Wind direction <span class="unit">degrees (°)</span></label>
+                <label><span data-i18n="field.winddir">Wind direction</span> <span class="unit" data-i18n="unit.degrees">degrees (°)</span></label>
                 <input type="number" step="1" placeholder="0" data-feature="est_santa_cruz_gir_n_dir"/>
               </div>
 
               <div class="field">
-                <label>Relative humidity <span class="unit">%</span></label>
+                <label><span data-i18n="field.humidity">Relative humidity</span> <span class="unit">%</span></label>
                 <input type="number" step="1" placeholder="0" data-feature="est_santa_cruz_gir_n_humedad"/>
               </div>
 
               <div class="field">
-                <label>Ambient temperature <span class="unit">°C</span></label>
+                <label><span data-i18n="field.temperature">Ambient temperature</span> <span class="unit">°C</span></label>
                 <input type="number" step="1" placeholder="0" data-feature="est_santa_cruz_gir_n"/>
               </div>
             </div>
@@ -173,7 +178,8 @@
 
         <button class="primary-btn"
             id="btn-predict"
-            type="button">
+            type="button"
+            data-i18n-html="btn.predict">
           Predict PM <sub>2.5</sub>&nbsp;(t+1)
         </button>
       </section>
@@ -183,8 +189,8 @@
         <header class="panel-header">
           <img class="panel-title-icon" src="Assets/Trend.svg" alt="trend icon" />
           <div class="panel-header-text">
-            <h2>Prediction Result</h2>
-            <p>Estimated concentration for the next hour</p>
+            <h2 data-i18n="result.title">Prediction Result</h2>
+            <p data-i18n="result.subtitle">Estimated concentration for the next hour</p>
           </div>
         </header>
 
@@ -194,7 +200,7 @@
             <img class="placeholder-icon" src="Assets/Trend - gray.svg" alt="placeholder icon">
 
             <!--Top message inside the box-->
-            <p id="prediction-message">Fill out the form and click "Predict"</p>
+            <p id="prediction-message" data-i18n="result.idle">Fill out the form and click "Predict"</p>
 
             <!--Prediction value, hidden at first-->
             <p id="prediction-result" class="prediction-value" style="display: none;">—</p>
@@ -204,8 +210,8 @@
           <div class="model-card">
             <img class="model-icon" src="Assets/Information.svg" alt="info icon">
             <div class="model-text">
-              <p><span class="label">Model:</span> Random Forest</p>
-              <p class="muted">Version 1.0 • Last updated: Nov 2025</p>
+              <p><span class="label" data-i18n="model.label">Model:</span> Random Forest</p>
+              <p class="muted" data-i18n="model.meta">Version 1.0 • Last updated: Nov 2025</p>
             </div>
           </div>
 
@@ -214,8 +220,8 @@
             <div class="export-header">
               <img class="model-icon" src="Assets/Report.svg" alt="report icon">
               <div class="model-text">
-                <p><span class="label">Export report</span></p>
-                <p class="muted">
+                <p><span class="label" data-i18n="export.title">Export report</span></p>
+                <p class="muted" data-i18n="export.desc">
                   Generate a PDF report with the entered data and the prediction result.
                 </p>
               </div>
@@ -225,7 +231,7 @@
                     id="btn-export-pdf"
                     type="button">
               <img class="btn-icon" src="Assets/Sheet.svg" alt="pdf icon">
-              <span>Export PDF</span>
+              <span data-i18n="export.btn">Export PDF</span>
             </button>
           </div>
         </div>
@@ -235,8 +241,8 @@
 
     <!-- FOOTER -->
     <footer class="page-footer">
-      <p>System developed with Machine Learning algorithms for environmental analysis</p>
-      <p class="muted">PM <sub>2.5</sub> values are measured in micrograms per cubic meter (µg/m³)</p>
+      <p data-i18n="footer.main">System developed with Machine Learning algorithms for environmental analysis</p>
+      <p class="muted" data-i18n-html="footer.units">PM <sub>2.5</sub> values are measured in micrograms per cubic meter (µg/m³)</p>
     </footer>
 
   </div>
@@ -249,6 +255,9 @@
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+  <!-- English / Spanish strings (must load before web_predict.js) -->
+  <script src="i18n.js"></script>
+
   <!-- Browser backend (model + validation + PDF), used when not running inside pywebview -->
   <script src="web_predict.js"></script>
 
@@ -260,8 +269,16 @@
     window._pywebviewReady = true;
   });
 
+  const t = (key, params) => window.AirAMBI18n.t(key, params);
+
+  // Last prediction error, kept so it can be re-rendered when the language changes.
+  let lastError = null; // { key, params } for validation errors, { detail } otherwise
+
   document.addEventListener('DOMContentLoaded', function () {
     console.log('[JS] DOMContentLoaded fired');
+
+    window.AirAMBI18n.init();
+    window.addEventListener('airamb:langchange', renderError);
 
     const predictBtn = document.getElementById('btn-predict');
     const pdfBtn = document.getElementById('btn-export-pdf');
@@ -281,6 +298,14 @@
     }
   });
 
+  // Desktop app (pywebview) calls Python; a normal browser (GitHub Pages) runs everything in JS.
+  // Returns 'desktop', 'web', or null when no backend is ready yet.
+  function backendFor(method) {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api[method]) return 'desktop';
+    if (!window.pywebview && window.AirAMBWeb && location.protocol !== 'file:') return 'web';
+    return null;
+  }
+
   function collectFormData() {
     const inputs = document.querySelectorAll('[data-feature]');
     const payload = {};
@@ -295,21 +320,44 @@
     return payload;
   }
 
+  function renderError() {
+    const errorElem = document.getElementById('prediction-error');
+    if (!errorElem) return;
+    if (!lastError) {
+      errorElem.textContent = '';
+      return;
+    }
+    const detail = lastError.key ? t(lastError.key, lastError.params) : lastError.detail;
+    errorElem.textContent = detail
+      ? t('result.errorDetail', { detail })
+      : t('result.errorGeneric');
+  }
+
+  function showMessage(key) {
+    const msgElem = document.getElementById('prediction-message');
+    if (!msgElem) return;
+    msgElem.dataset.i18n = key;
+    msgElem.textContent = t(key);
+    msgElem.style.display = 'block';
+  }
+
+  function hideMessage() {
+    const msgElem = document.getElementById('prediction-message');
+    if (!msgElem) return;
+    msgElem.textContent = '';
+    msgElem.style.display = 'none';
+  }
+
   async function predict() {
     const resultElem = document.getElementById('prediction-result');
-    const errorElem = document.getElementById('prediction-error');
-    const msgElem = document.getElementById('prediction-message');
 
     // Clear previous error
-    if (errorElem) {
-      errorElem.textContent = '';
-    }
+    lastError = null;
+    renderError();
 
-    // Desktop app (pywebview) calls Python; a normal browser (GitHub Pages) runs the model in JS.
-    const useDesktop = !!(window.pywebview && window.pywebview.api && window.pywebview.api.predict);
-    const useWeb = !window.pywebview && window.AirAMBWeb && location.protocol !== 'file:';
-    if (!useDesktop && !useWeb) {
-      alert('The application is not ready yet. Try again in a few seconds.');
+    const mode = backendFor('predict');
+    if (!mode) {
+      alert(t('alert.notReady'));
       return;
     }
 
@@ -317,25 +365,23 @@
       const data = collectFormData();
 
       // "Calculating" state
-      if (msgElem) {
-        msgElem.textContent = 'Calculating prediction...';
-        msgElem.style.display = 'block';
-      }
+      showMessage('result.calculating');
       if (resultElem) {
         resultElem.style.display = 'none';
       }
 
-      console.log('[JS] Predicting via', useDesktop ? 'pywebview' : 'browser model');
-      const predictionValue = useDesktop
+      // Validate here first so the messages follow the selected language;
+      // the Python backend validates again as a safety net.
+      window.AirAMBWeb.validate(data);
+
+      console.log('[JS] Predicting via', mode === 'desktop' ? 'pywebview' : 'browser model');
+      const predictionValue = mode === 'desktop'
         ? await window.pywebview.api.predict(data)
         : await window.AirAMBWeb.predict(data);
       console.log('[JS] Response:', predictionValue);
 
       // Show only the large number in the box
-      if (msgElem) {
-        msgElem.textContent = '';
-        msgElem.style.display = 'none';
-      }
+      hideMessage();
       if (resultElem) {
         const formatted = Number(predictionValue).toFixed(2) + ' µg/m³';
         resultElem.textContent = formatted;
@@ -345,36 +391,30 @@
     } catch (err) {
       console.error('[JS] Error during prediction:', err);
 
-      const detail = (err && (err.message || err.toString())) || '';
-
       if (resultElem) {
         resultElem.textContent = '—';
         resultElem.style.display = 'none';
       }
-      if (msgElem) {
-        msgElem.textContent = 'An error occurred during prediction.';
-        msgElem.style.display = 'block';
-      }
-      if (errorElem) {
-        errorElem.textContent = detail
-          ? `Error calculating the prediction: ${detail}`
-          : 'Error calculating the prediction. Please check again.';
-      }
+      showMessage('result.error');
+
+      lastError = err && err.i18nKey
+        ? { key: err.i18nKey, params: err.i18nParams }
+        : { detail: (err && (err.message || err.toString())) || '' };
+      renderError();
     }
   }
 
   async function generatePDF() {
     console.log('[PDF] generatePDF() called');
 
-    const useDesktop = !!(window.pywebview && window.pywebview.api && window.pywebview.api.export_pdf);
-    const useWeb = !window.pywebview && window.AirAMBWeb && location.protocol !== 'file:';
-    if (!useDesktop && !useWeb) {
-      alert('The export_pdf function is not available in the backend.');
+    const mode = backendFor('export_pdf');
+    if (!mode) {
+      alert(t('alert.pdfUnavailable'));
       return;
     }
 
     try {
-      // 1) Collect inputs with readable labels
+      // 1) Collect inputs with readable labels (in the current language)
       const inputs = document.querySelectorAll('[data-feature]');
       const items = [];
 
@@ -388,7 +428,7 @@
           }
         }
         if (!labelText) {
-          labelText = input.dataset.feature || 'Variable';
+          labelText = input.dataset.feature || t('pdf.fallbackLabel');
         }
 
         const valueText = input.value !== '' ? input.value : '—';
@@ -410,22 +450,30 @@
       const payload = {
         inputs: items,
         prediction: predictionText,
+        // Fixed texts of the report, in the language currently selected
+        strings: {
+          title: t('pdf.title'),
+          date: t('pdf.date'),
+          inputs: t('pdf.inputs'),
+          prediction: t('pdf.prediction'),
+          source: t('pdf.source'),
+        },
       };
 
       console.log('[PDF] Payload to send to export_pdf:', payload);
 
       // 3) Desktop: Python writes the file; browser: jsPDF downloads it
-      if (useDesktop) {
+      if (mode === 'desktop') {
         const savedPath = await window.pywebview.api.export_pdf(payload);
         console.log('[PDF] PDF saved at:', savedPath);
-        alert('Report generated successfully.\nFile path:\n' + savedPath);
+        alert(t('alert.pdfOk', { path: savedPath }));
       } else {
         const fileName = await window.AirAMBWeb.exportPdf(payload);
         console.log('[PDF] PDF downloaded as:', fileName);
       }
     } catch (error) {
       console.error('[PDF] Error generating the PDF:', error);
-      alert('An error occurred while generating the PDF. Check the console for details.');
+      alert(t('alert.pdfError'));
     }
   }
 

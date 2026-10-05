@@ -94,6 +94,41 @@ body {
 .header-right {
   display: flex;
   align-items: center;
+  gap: 16px;
+}
+
+/* ===== Language switch (EN / ES) ===== */
+.lang-switch {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dbeafe;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lang-btn:hover {
+  color: #ffffff;
+}
+
+.lang-btn.active {
+  color: #1d4ed8;
+  background: #ffffff;
+}
+
+.lang-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
 }
 
 .ml-pill {

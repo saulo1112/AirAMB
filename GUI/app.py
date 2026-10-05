@@ -12,6 +12,7 @@ from pathlib import Path
 from datetime import datetime
 
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.utils import simpleSplit
 from reportlab.pdfgen import canvas
 
 
@@ -97,14 +98,32 @@ class Api:
                 {"feature": "...", "label": "...", "value": "..."},
                 ...
             ],
-            "prediction": "22.09 µg/m³"
+            "prediction": "22.09 µg/m³",
+            "strings": {          # optional: fixed texts in the UI language
+                "title": "...", "date": "...", "inputs": "...",
+                "prediction": "...", "source": "..."
+            }
         }
+
+        When "strings" is missing, English texts are used.
 
         Returns the absolute path of the generated file.
         """
         try:
             # Reports folder
             reports_dir = get_reports_dir()
+
+            texts = {
+                "title": "PM2.5 (t+1) Prediction Report",
+                "date": "Date and time",
+                "inputs": "Input values:",
+                "prediction": "PM2.5 (t+1) prediction:",
+                "source": (
+                    "Source: Colombian Ministry of Environment and Sustainable Development - "
+                    "Resolution 2254 of 2017 (Table 4, original in Spanish)."
+                ),
+            }
+            texts.update(payload.get("strings") or {})
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = reports_dir / f"reporte_pm25_{timestamp}.pdf"
@@ -118,7 +137,7 @@ class Api:
             # Title
             # =========================
             c.setFont("Helvetica-Bold", 16)
-            c.drawString(40, y, "PM2.5 (t+1) Prediction Report")
+            c.drawString(40, y, texts["title"])
             y -= 30
 
             # =========================
@@ -128,7 +147,7 @@ class Api:
             c.drawString(
                 40,
                 y,
-                f"Date and time: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+                f"{texts['date']}: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
             )
             y -= 20
 
@@ -136,7 +155,7 @@ class Api:
             # Input values
             # =========================
             c.setFont("Helvetica-Bold", 12)
-            c.drawString(40, y, "Input values:")
+            c.drawString(40, y, texts["inputs"])
             y -= 18
 
             c.setFont("Helvetica", 10)
@@ -178,7 +197,7 @@ class Api:
             # =========================
             y -= 10
             c.setFont("Helvetica-Bold", 12)
-            c.drawString(40, y, "PM2.5 (t+1) prediction:")
+            c.drawString(40, y, texts["prediction"])
             y -= 20
 
             c.setFont("Helvetica", 12)
@@ -218,11 +237,10 @@ class Api:
                 # Source text below the image
                 y = y - img_height - 12
                 c.setFont("Helvetica-Oblique", 9)
-                source_text = (
-                    "Source: Colombian Ministry of Environment and Sustainable Development - "
-                    "Resolution 2254 of 2017 (Table 4)."
-                )
-                c.drawString(40, y, source_text)
+                # Wrap the source line to the printable width (it can be long)
+                for line in simpleSplit(texts["source"], "Helvetica-Oblique", 9, width - 80):
+                    c.drawString(40, y, line)
+                    y -= 11
 
             else:
                 print(f"[API] Warning: table image not found at {tabla_path}")
